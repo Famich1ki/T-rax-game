@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>d:/T-rax/Content/bird1.png</File>
+    <File>d:/T-rax/Content/bird2.png</File>
+    <File>d:/T-rax/Content/CrouchAtlases.png</File>
+    <File>d:/T-rax/Content/ground.png</File>
+    <File>d:/T-rax/Content/lc1.png</File>
+    <File>d:/T-rax/Content/lc3.png</File>
+    <File>d:/T-rax/Content/lc5.png</File>
+    <File>d:/T-rax/Content/RunningAtlases.png</File>
+    <File>d:/T-rax/Content/score.spritefont</File>
+    <File>d:/T-rax/Content/xx1.png</File>
+    <File>d:/T-rax/Content/xx3.png</File>
+    <File>d:/T-rax/Content/xx6.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
