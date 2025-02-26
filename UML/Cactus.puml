@@ -1,0 +1,27 @@
+@startuml
+class Cactus {
+    - cactuses : List<Texture2D>
+    - size : int
+    - originalPosHeihgt : float
+    - speed : float
+    - displayed : List<Entity>
+    - random : Random
+    - spawnAfter : float
+    - duration : float
+    - isGenerated : bool
+    - totalDuration : float
+    + Cactus(cactuses:List<Texture2D>, originalPosHeihgt:float, speed:float)
+    + Update(gameTime:GameTime, _graphics:GraphicsDeviceManager) : List<Entity>
+    - GetNextSpawnAfter() : float
+    - GetNextCactuses(_graphics:GraphicsDeviceManager) : void
+    - getZoom() : float
+    + Draw(spriteBatch:SpriteBatch) : void
+}
+class Entity {
+    + pos : float
+    + cactus : Texture2D
+    + zoom : float
+    + Entity(pos:float, cactus:Texture2D, zoom:float)
+}
+Cactus +-- Entity
+@enduml

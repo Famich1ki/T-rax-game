@@ -1,0 +1,28 @@
+@startuml
+class Dinosaur {
+    + Runnings : Texture2D <<get>> <<set>>
+    + Rows : int <<get>> <<set>>
+    + Columns : int <<get>> <<set>>
+    - currentFrame : int
+    - totalFrames : int
+    - elapsedTime : float
+    - frameTime : float
+    - zoom : float
+    - originalPos : float
+    + IsOnTheGround : bool <<get>>
+    - widthPos : float
+    - heightPos : float
+    - acceleration : float
+    - airDuration : float
+    - jumpHeight : float
+    - jumpingSpeed : float
+    - Crouchs : Texture2D
+    + IsCrouching : bool <<get>>
+    + Dinosaur(runnings:Texture2D, crouchs:Texture2D, rows:int, columns:int, widthPos:float, heightPos:int, _graphics:GraphicsDeviceManager)
+    + Update(gameTime:GameTime) : float
+    + Init(spriteBatch:SpriteBatch) : void
+    + Run(spriteBatch:SpriteBatch) : void
+    + Jump(spriteBatch:SpriteBatch) : void
+    + Crouch(spriteBatch:SpriteBatch) : void
+}
+@enduml

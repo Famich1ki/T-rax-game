@@ -1,0 +1,16 @@
+@startuml
+class Ground {
+    - ground1 : Texture2D
+    - ground2 : Texture2D
+    - ground1PosWidth : float
+    - ground2PosWidth : float
+    - groundPosHeight : int
+    - groundSpeed : float
+    - groundWidth : float
+    - groundHeight : float
+    - zoom : float
+    + Ground(ground1:Texture2D, ground2:Texture2D, height:int, speed:float)
+    + Update(gameTime:GameTime) : void
+    + Draw(spriteBatch:SpriteBatch) : void
+}
+@enduml

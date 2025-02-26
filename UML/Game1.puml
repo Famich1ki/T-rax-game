@@ -1,0 +1,40 @@
+@startuml
+class Game1 {
+    - _graphics : GraphicsDeviceManager
+    - _spriteBatch : SpriteBatch
+    - ground : Ground
+    - groundHeight : int
+    - dinosaur : Dinosaur
+    - groundSpeed : float
+    - cactus : Cactus.Cactus
+    - cactusBaseHeight : float
+    - bird : Bird.Bird
+    - {static} dinosaurInitX : float
+    - dinosaurPos : Vector2
+    - cactuses : List<Cactus.Cactus.Entity>
+    - birds : List<Vector2>
+    - crouch : Vector2
+    - run : Vector2
+    - birdSize : Vector2
+    - isGameOver : bool
+    - font : SpriteFont
+    - score : int
+    - duration : float
+    + Game1()
+    # <<override>> Initialize() : void
+    # <<override>> LoadContent() : void
+    # <<override>> Update(gameTime:GameTime) : void
+    # <<override>> Draw(gameTime:GameTime) : void
+    - isColliding() : bool
+    - isCollidingWithCactuses() : bool
+    - isCollidingWithBirds() : bool
+    - isOverlappingX(leftA:float, rightA:float, leftB:float, rightB:float) : bool
+    - isOverlappingY(bottomA:float, topA:float, bottomB:float, topB:float) : bool
+    - getDinosaurPos() : float[]
+    - initGame() : void
+    - drawBirdRectangle(birds:List<Vector2>, spriteBatch:SpriteBatch, color:Color) : void
+    - drawDinosaurRectangle(spriteBatch:SpriteBatch, color:Color) : void
+    - drawCactusRectangle(cactuses:List<Cactus.Cactus.Entity>, spriteBatch:SpriteBatch, color:Color) : void
+}
+Game <|-- Game1
+@enduml
