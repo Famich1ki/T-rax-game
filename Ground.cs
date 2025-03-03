@@ -13,15 +13,15 @@ namespace ground
 {
     public class Ground
     {
-        private Texture2D ground1;
-        private Texture2D ground2;
-        private float ground1PosWidth; // The real X position of the first ground, updating during game.
-        private float ground2PosWidth; // The real X position of the second ground, also updating during game.
-        private int groundPosHeight; // The real Y position of ground.
-        private float groundSpeed; // speed of ground.
-        private float groundWidth; // static width of ground texture.
-        private float groundHeight; // static height of ground texture.
-        private float zoom; // zoom rate (the original texture is a little bit too thin so using zoom to enhance performance)
+        private Texture2D ground1;      // instance of ground
+        private Texture2D ground2;      // another instance of ground
+        private float ground1PosWidth;  // The real X position of the first ground, updating during game.
+        private float ground2PosWidth;  // The real X position of the second ground, also updating during game.
+        private int groundPosHeight;    // The real Y position of ground.
+        private float groundSpeed;      // speed of ground.
+        private float groundWidth;      // static width of ground texture.
+        private float groundHeight;     // static height of ground texture.
+        private float zoom;             // zoom rate (the original texture is a little bit too thin so using zoom to enhance performance)
  
         public Ground(Texture2D ground1, Texture2D ground2, int height, float speed)
         {

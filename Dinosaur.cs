@@ -11,24 +11,24 @@ namespace dinosaur
 {
     public class Dinosaur
     {
-        public Texture2D Runnings { get; set; }
-        public int Rows { get; set; }
-        public int Columns { get; set; }
-        private int currentFrame;
-        private int totalFrames;
-        private float elapsedTime; // buzzer
-        private float frameTime;   // frame rate
-        private float zoom; // zoom rate
-        private float originalPos; // original position of dinosaur (before game start)
-        public bool IsOnTheGround {get; private set;}
-        private float widthPos; // actual X position in game
-        private float heightPos; // actual Y position in game
-        private float acceleration; // a
-        private float airDuration; // t (from ground to top, s)
-        private float jumpHeight; // h
-        private float jumpingSpeed; // v
-        private Texture2D Crouchs;
-        public bool IsCrouching {get; private set;}
+        public Texture2D Runnings { get; set; }         // instance of running dinosaur
+        public int Rows { get; set; }                   // row of atlases
+        public int Columns { get; set; }                // col of atlases
+        private int currentFrame;                       // current frame of animation
+        private int totalFrames;                        // total number of frames in a loop
+        private float elapsedTime;                      // buzzer    
+        private float frameTime;                        // frame rate
+        private float zoom;                             // zoom rate
+        private float originalPos;                      // original position of dinosaur (before game start)
+        public bool IsOnTheGround {get; private set;}   // flag to determine whether the dinosaur is on the ground
+        private float widthPos;                         // actual X position in game
+        private float heightPos;                        // actual Y position in game
+        private float acceleration;                     // a
+        private float airDuration;                      // t (from ground to top, s)
+        private float jumpHeight;                       // h
+        private float jumpingSpeed;                     // v
+        private Texture2D Crouchs;                      // instance of crouching dinosaur
+        public bool IsCrouching {get; private set;}     // flag to determine whether dinosaur is crouching
 
         public Dinosaur(Texture2D runnings, Texture2D crouchs,  int rows, int columns, float widthPos, int heightPos, GraphicsDeviceManager _graphics)
         {

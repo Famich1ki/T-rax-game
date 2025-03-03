@@ -6,22 +6,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Bird;
 class Bird {
-    private Texture2D bird1;    
-    private Texture2D bird2;
-    private float maxHeight;
-    private float minHeight;
-    private float speed;
-    private Random random;
-    private int currentFrame;
-    private float frameTime;
-    private int totalFrame;
-    private float elapsedTime;
-    private float zoom; 
-    private List<Vector2> displayed;
-    private bool isGenerated;
-    private float spawnAfter;
-    private float duration;
-    private float totalDuration;
+    private Texture2D bird1;        // instance of bird
+    private Texture2D bird2;        // another instance of bird
+    private float maxHeight;        // upper limitation of bird
+    private float minHeight;        // lower limitation of bird
+    private float speed;            // speed of bird. (as same as groundSpeed)
+    private Random random;          // instance of Random
+    private int currentFrame;       // current frame of bird animation
+    private float frameTime;        // duration of each frame
+    private int totalFrame;         // number of frame in a loop
+    private float elapsedTime;      // timer
+    private float zoom;             // zoom rate
+    private List<Vector2> displayed;// birds currently displayed on the screen   
+    private bool isGenerated;       // 
+    private float spawnAfter;       // 
+    private float duration;         //
+    private float totalDuration;    // 
 
     public Bird(Texture2D bird1, Texture2D bird2, float maxHeight, float minHeight, float speed) 
     {

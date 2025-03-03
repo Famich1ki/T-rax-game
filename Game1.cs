@@ -13,24 +13,24 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private Ground ground;
-    private int groundHeight;
-    private Dinosaur dinosaur;
-    private float groundSpeed;
-    private Cactus.Cactus cactus;
-    private float cactusBaseHeight;
-    private Bird.Bird bird;
-    private static float dinosaurInitX;
-    private Vector2 dinosaurPos;
-    private List<Cactus.Cactus.Entity> cactuses;
-    private List<Vector2> birds;
-    private Vector2 crouch;
-    private Vector2 run;
-    private Vector2 birdSize;
-    private bool isGameOver;
-    private SpriteFont font;
-    private int score;
-    private float duration;
+    private Ground ground;                      // instance of Ground
+    private int groundHeight;                   // basic ground height in game
+    private Dinosaur dinosaur;                  // instance of Dinosaur
+    private float groundSpeed;                  // initial game speed
+    private Cactus.Cactus cactus;               // instance of cactus
+    private float cactusBaseHeight;             // Y position of all cactus
+    private Bird.Bird bird;                     // instance of Bird
+    private static float dinosaurInitX;         // initial X position of dinosaur  
+    private Vector2 dinosaurPos;                // initial dinosaur position (X, Y)
+    private List<Cactus.Cactus.Entity> cactuses;// cactuses currently displayed on screen
+    private List<Vector2> birds;                // position of birds currently displayed on screen
+    private Vector2 crouch;                     // width and height of crouching dinosaur (width, height)
+    private Vector2 run;                        // width and height of standing dinosaur (width, height)
+    private Vector2 birdSize;                   // width and height of bird (width, height)
+    private bool isGameOver;                    // flag to determine whether the game is over
+    private SpriteFont font;                    // instance of font
+    private int score;                          // score recorder 
+    private float duration;                     // time duration
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);

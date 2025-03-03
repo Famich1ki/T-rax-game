@@ -8,10 +8,10 @@ namespace Cactus;
 class Cactus {
 
     public class Entity {
-
-        public float pos;
-        public Texture2D cactus;
-        public float zoom;
+        // entity of current displayed cactus
+        public float pos;           // X position
+        public Texture2D cactus;    // instance of cactus
+        public float zoom;          // zoom rate
 
         public Entity(float pos, Texture2D cactus, float zoom) {
             this.pos = pos;
@@ -19,16 +19,16 @@ class Cactus {
             this.zoom = zoom;
         }
     }
-    private List<Texture2D> cactuses;
-    private int size;
-    private float originalPosHeihgt;
-    private float speed;
-    private List<Entity> displayed;
-    private Random random;
-    private float spawnAfter;
-    private float duration;
-    private bool isGenerated;
-    private float totalDuration;
+    private List<Texture2D> cactuses;   // all types of cactus
+    private int size;                   // number of type of cactus
+    private float originalPosHeihgt;    // initial Y position of cactus
+    private float speed;                // speed of cactus (as same as groundSpeed)
+    private List<Entity> displayed;     // cactuses currently displayed on the screen
+    private Random random;              // instance of Random
+    private float spawnAfter;           // 
+    private float duration;             // 
+    private bool isGenerated;           // 
+    private float totalDuration;        // 
     public Cactus(List<Texture2D> cactuses, float originalPosHeihgt, float speed) 
     {
         this.cactuses = cactuses;
