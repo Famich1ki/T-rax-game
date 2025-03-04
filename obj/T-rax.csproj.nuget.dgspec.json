@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\T-rax\\T-rax.csproj": {}
+    "D:\\T-rax\\T-rax.csproj": {}
   },
   "projects": {
-    "d:\\T-rax\\T-rax.csproj": {
+    "D:\\T-rax\\T-rax.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\T-rax\\T-rax.csproj",
+        "projectUniqueName": "D:\\T-rax\\T-rax.csproj",
         "projectName": "T-rax",
-        "projectPath": "d:\\T-rax\\T-rax.csproj",
+        "projectPath": "D:\\T-rax\\T-rax.csproj",
         "packagesPath": "C:\\Users\\张展博\\.nuget\\packages\\",
-        "outputPath": "d:\\T-rax\\obj\\",
+        "outputPath": "D:\\T-rax\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\张展博\\AppData\\Roaming\\NuGet\\NuGet.Config"

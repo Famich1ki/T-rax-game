@@ -23,3 +23,18 @@ Prototype finished. Basic functions, including movements, speed accelaration, sc
 - （If necessary）Reconstruction methods.
     - Some Parameters of methods are unnecessary or unstructured.
 
+### 2025.03.04
+
+#### updating 
+Last version the collision detection method is simply AABB detection. Enhancing the accuracy with pixel-level detection after AABB detection.
+
+#### NEED TO DO
+- The UI designation of game start and game over.
+    - Design a simple UI for game start frame and game over frame.
+- score tracking process need to be improved.
+    - The score tracking now is somehow unsatisfied.
+- Revising variable names.  
+    - Some variable names are confused which need to be renamed.
+- （If necessary）Reconstruction methods.
+    - Some Parameters of methods are unnecessary or unstructured.
+
