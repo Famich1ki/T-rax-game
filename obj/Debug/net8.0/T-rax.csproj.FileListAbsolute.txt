@@ -35,3 +35,4 @@ d:\T-rax\bin\Debug\net8.0\Content\xx6.xnb
 d:\T-rax\bin\Debug\net8.0\Content\bird1.xnb
 d:\T-rax\bin\Debug\net8.0\Content\bird2.xnb
 D:\T-rax\bin\Debug\net8.0\Content\score.xnb
+d:\T-rax\obj\Debug\net8.0\T-rax.sourcelink.json

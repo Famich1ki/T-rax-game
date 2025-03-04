@@ -30,6 +30,10 @@ namespace dinosaur
         private Texture2D Crouchs;                      // instance of crouching dinosaur
         public bool IsCrouching {get; private set;}     // flag to determine whether dinosaur is crouching
 
+        Color[][] runningColor;
+        Color[][] crouchingColor;
+        Color[] jumpingColor;
+
         public Dinosaur(Texture2D runnings, Texture2D crouchs,  int rows, int columns, float widthPos, int heightPos, GraphicsDeviceManager _graphics)
         {
             Runnings = runnings;
@@ -52,6 +56,8 @@ namespace dinosaur
 
             Crouchs = crouchs;
             IsCrouching = false;
+
+            getColors();
         }
  
         public float Update(GameTime gameTime)
@@ -98,7 +104,7 @@ namespace dinosaur
             spriteBatch.Draw(Runnings, destination, sourceRectangle, Color.White, 0f, new Vector2(0, 0), zoom, SpriteEffects.None, 0f);
         }
  
-        public void Run(SpriteBatch spriteBatch)
+        public Color[] Run(SpriteBatch spriteBatch)
         {
             int width = Runnings.Width / 5;
             int height = Runnings.Height / Rows;
@@ -109,18 +115,22 @@ namespace dinosaur
             Vector2 destination = new Vector2(widthPos, originalPos);
  
             spriteBatch.Draw(Runnings, destination, sourceRectangle, Color.White, 0f, new Vector2(0, 0), zoom, SpriteEffects.None, 0f);
-            
+            if(currentFrame % Columns == 0) {
+                return runningColor[0];
+            }
+            return runningColor[1]; 
         }
 
-        public void Jump(SpriteBatch spriteBatch) 
+        public Color[] Jump(SpriteBatch spriteBatch) 
         {
             Rectangle sourceRectangle = new Rectangle(1, 0, Runnings.Width / 5, Runnings.Height);
             Vector2 destination = new Vector2(widthPos, heightPos);
 
             spriteBatch.Draw(Runnings, destination, sourceRectangle, Color.White, 0f, new Vector2(0, 0), zoom, SpriteEffects.None, 0f);
+            return jumpingColor;
         }
 
-        public void Crouch(SpriteBatch spriteBatch) {
+        public Color[] Crouch(SpriteBatch spriteBatch) {
             int width = Crouchs.Width / 2;
             int height = Crouchs.Height;
             // int row = 0;
@@ -129,6 +139,36 @@ namespace dinosaur
             Rectangle sourceRectangle = new Rectangle(width * column, 0, width, height);
             Vector2 destination = new Vector2(widthPos, originalPos);
             spriteBatch.Draw(Crouchs, destination, sourceRectangle, Color.White, 0f, new Vector2(0, 0), zoom, SpriteEffects.None, 0f);
+
+            if(currentFrame % 2 == 0) {
+                return crouchingColor[0];
+            }
+            return crouchingColor[1];
+        }
+
+        private void getColors() {
+            int runningLen = (this.Runnings.Width / 5) * this.Runnings.Height;
+            int crouchingLen = (this.Crouchs.Width / 2) * this.Crouchs.Height;
+            runningColor = new Color[2][];
+            crouchingColor = new Color[2][];
+            jumpingColor = new Color[runningLen];
+
+            runningColor[0] = new Color[runningLen];
+            runningColor[1] = new Color[runningLen];
+            crouchingColor[0] = new Color[crouchingLen];
+            crouchingColor[1] = new Color[crouchingLen];
+
+            Rectangle running1 = new Rectangle((this.Runnings.Width / 5) * 2, 0, this.Runnings.Width / 5, this.Runnings.Height);
+            Rectangle running2 = new Rectangle((this.Runnings.Width / 5) * 3, 0, this.Runnings.Width / 5, this.Runnings.Height);
+            Rectangle crouching1 = new Rectangle(0, 0, this.Crouchs.Width / 2, this.Crouchs.Height);
+            Rectangle crouching2 = new Rectangle(this.Crouchs.Width / 2, 0, this.Crouchs.Width / 2, this.Crouchs.Height);
+            Rectangle jumping = new Rectangle(0, 0, this.Runnings.Width / 5, this.Runnings.Height);
+
+            this.Runnings.GetData(0, running1, runningColor[0], 0, runningLen);
+            this.Runnings.GetData(0, running2, runningColor[1], 0, runningLen);
+            this.Crouchs.GetData(0, crouching1, crouchingColor[0], 0, crouchingLen);
+            this.Crouchs.GetData(0, crouching2, crouchingColor[1], 0, crouchingLen);
+            this.Runnings.GetData(0, jumping, jumpingColor, 0, runningLen);
         }
     }
 }

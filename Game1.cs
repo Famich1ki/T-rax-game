@@ -23,7 +23,7 @@ public class Game1 : Game
     private static float dinosaurInitX;         // initial X position of dinosaur  
     private Vector2 dinosaurPos;                // initial dinosaur position (X, Y)
     private List<Cactus.Cactus.Entity> cactuses;// cactuses currently displayed on screen
-    private List<Vector2> birds;                // position of birds currently displayed on screen
+    private List<Bird.Bird.Entity> birds;       // position of birds currently displayed on screen
     private Vector2 crouch;                     // width and height of crouching dinosaur (width, height)
     private Vector2 run;                        // width and height of standing dinosaur (width, height)
     private Vector2 birdSize;                   // width and height of bird (width, height)
@@ -31,6 +31,8 @@ public class Game1 : Game
     private SpriteFont font;                    // instance of font
     private int score;                          // score recorder 
     private float duration;                     // time duration
+    private Color[] dinosaurColor;              // Color matrix of dinosaur
+    private float originalSpeed;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -44,16 +46,17 @@ public class Game1 : Game
         isGameOver = true;
         score = 0;
         duration = 0;
+        originalSpeed = groundSpeed;
     }
 
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
         
-        // 设置分辨率（例如 1920x1080）
+        // set resolution（例如 1920x1080）
         _graphics.PreferredBackBufferWidth = 1280;
         _graphics.PreferredBackBufferHeight = 720;
-        _graphics.ApplyChanges(); // 应用更改
+        _graphics.ApplyChanges();
 
         base.Initialize();
     }
@@ -113,6 +116,19 @@ public class Game1 : Game
         duration += (float) gameTime.ElapsedGameTime.TotalSeconds;
         groundSpeed += (duration / 10f);
         base.Update(gameTime);
+        // System.Console.WriteLine(birds == null);
+        // System.Console.WriteLine(cactuses == null);
+        // if(birds != null) {
+        //     System.Console.WriteLine(birds.Count);
+        // } else {
+        //     System.Console.WriteLine("Null");
+        // }
+        // if(cactuses != null) {
+        //     System.Console.WriteLine(cactuses.Count);
+        // } else {
+        //     System.Console.WriteLine("Null");
+        // }
+        
     }
 
     protected override void Draw(GameTime gameTime)
@@ -127,18 +143,18 @@ public class Game1 : Game
         
         if(dinosaur.IsOnTheGround) {
             if(dinosaur.IsCrouching) {
-                dinosaur.Crouch(_spriteBatch);
+                dinosaurColor = dinosaur.Crouch(_spriteBatch);
             } else {
-                dinosaur.Run(_spriteBatch);
+                dinosaurColor = dinosaur.Run(_spriteBatch);
             }
         } else {
-            dinosaur.Jump(_spriteBatch);
+            dinosaurColor = dinosaur.Jump(_spriteBatch);
         }
 
         _spriteBatch.DrawString(font, "SCORE :" + score, new Vector2(_graphics.PreferredBackBufferWidth * 0.80f, _graphics.PreferredBackBufferHeight * 0.1f), Color.Blue);
-        // drawBirdRectangle(birds, _spriteBatch, Color.Red);
-        // drawDinosaurRectangle(_spriteBatch, Color.Blue);
-        // drawCactusRectangle(cactuses, _spriteBatch, Color.Yellow);
+        drawBirdRectangle(birds, _spriteBatch, Color.Red);
+        drawDinosaurRectangle(_spriteBatch, Color.Blue);
+        drawCactusRectangle(cactuses, _spriteBatch, Color.Yellow);
         _spriteBatch.End();
         base.Draw(gameTime);
     }
@@ -150,15 +166,17 @@ public class Game1 : Game
     private bool isCollidingWithCactuses() {
         float[] dinoPos = getDinosaurPos();
         foreach(Cactus.Cactus.Entity entity in cactuses) {
+            float[] obstacle = new float[4];
             Texture2D cactus = entity.cactus;
-            float width = entity.pos;
+            float width = entity.pos.X;
             float zoom = entity.zoom;
-            float cactusLeft = width - cactus.Width * zoom;
-            float cactusRight = width;
-            float cactusBottom = cactusBaseHeight;
-            float cactusTop = cactusBottom - cactus.Height * zoom; 
-            if(isOverlappingX(dinoPos[0], dinoPos[1], cactusLeft, cactusRight) && isOverlappingY(dinoPos[3], dinoPos[2], cactusBottom, cactusTop)) {
-                return true;
+            obstacle[0] = width - cactus.Width * zoom;          // left
+            obstacle[1] = width;                                // right
+            obstacle[3] = cactusBaseHeight;                     // bottom
+            obstacle[2] = obstacle[3] - cactus.Height * zoom;   // top
+            if(isOverlappingX(dinoPos[0], dinoPos[1], obstacle[0], obstacle[1]) && isOverlappingY(dinoPos[3], dinoPos[2], obstacle[3], obstacle[2])) {
+                System.Console.WriteLine("colliding with cactus");
+                return isPixelCollision(dinoPos, obstacle, dinosaurColor, entity.color);
             }
         }
         return false;
@@ -166,13 +184,16 @@ public class Game1 : Game
 
     private bool isCollidingWithBirds() {
         float[] dinoPos = getDinosaurPos();
-        foreach(Vector2 birdPos in birds) {
-            float birdLeft = birdPos.X - birdSize.X * 1.5f;
-            float birdRight = birdPos.X;
-            float birdTop = birdPos.Y - birdSize.Y * 1.5f;
-            float birdBottom = birdPos.Y;
-            if(isOverlappingX(dinoPos[0], dinoPos[1], birdLeft, birdRight) && isOverlappingY(dinoPos[3], dinoPos[2], birdBottom, birdTop)) {
-                return true;
+        foreach(Bird.Bird.Entity entity in birds) {
+            float[] obstacle = new float[4];
+            Vector2 birdPos = entity.pos;
+            obstacle[0] = birdPos.X - birdSize.X * 1.5f;    // left
+            obstacle[1] = birdPos.X;                        // right
+            obstacle[2] = birdPos.Y - birdSize.Y * 1.5f;    // top
+            obstacle[3] = birdPos.Y;                        // bottom
+            if(isOverlappingX(dinoPos[0], dinoPos[1], obstacle[0], obstacle[1]) && isOverlappingY(dinoPos[3], dinoPos[2], obstacle[3], obstacle[2])) {
+                System.Console.WriteLine("colliding with bird");
+                return isPixelCollision(dinoPos, obstacle, dinosaurColor, entity.color);
             }
         }
         return false;
@@ -221,16 +242,20 @@ public class Game1 : Game
         bird = new Bird.Bird(bird1, bird2, groundHeight, groundHeight - runningAtlases.Height * 2, groundSpeed);
 
         score = 0;
-        
         duration = 0;
+        groundSpeed = originalSpeed;
     }
 
-    private void drawBirdRectangle(List<Vector2> birds, SpriteBatch spriteBatch, Color color) 
+    private void drawBirdRectangle(List<Bird.Bird.Entity> birds, SpriteBatch spriteBatch, Color color) 
     {
+        if(birds == null) {
+            return;
+        }
         Texture2D pixel;
         pixel = new Texture2D(GraphicsDevice, 1, 1);
         pixel.SetData([color]);
-        foreach (Vector2 birdPos in birds) {
+        foreach (Bird.Bird.Entity bird in birds) {
+            Vector2 birdPos = bird.pos;
             int X = (int) birdPos.X, Y = (int) birdPos.Y, width = (int) (birdSize.X * 1.5f), height = (int) (birdSize.Y * 1.5f);
             spriteBatch.Draw(pixel, new Rectangle(X - width, Y - height, width, 1), color); // top
             spriteBatch.Draw(pixel, new Rectangle(X - width, Y, width, 1), color); // bottom
@@ -253,11 +278,14 @@ public class Game1 : Game
     }
 
     private void drawCactusRectangle(List<Cactus.Cactus.Entity> cactuses, SpriteBatch spriteBatch, Color color) {
+        if(cactuses == null) {
+            return;
+        }
         Texture2D pixel;
         pixel = new Texture2D(GraphicsDevice, 1, 1);
         pixel.SetData([color]);
         foreach(Cactus.Cactus.Entity cactus in cactuses) {
-            int X = (int) cactus.pos, Y = (int) cactusBaseHeight;
+            int X = (int) cactus.pos.X, Y = (int) cactusBaseHeight;
             float zoom = cactus.zoom;
             int width = (int) (cactus.cactus.Width * zoom), height = (int) (cactus.cactus.Height * zoom);
             spriteBatch.Draw(pixel, new Rectangle(X - width, Y - height, width, 1), color); // top
@@ -265,5 +293,35 @@ public class Game1 : Game
             spriteBatch.Draw(pixel, new Rectangle(X - width, Y - height, 1, height), color); // left
             spriteBatch.Draw(pixel, new Rectangle(X, Y - height, 1, height), color); // right
         }
+    }
+
+    private bool isPixelCollision(float[] dinosaur, float[] obstacle, Color[] colorDinosaur, Color[] colorObstacle) {
+        int dWidth = (int) (dinosaur[1] - dinosaur[0]);
+        int dHeight = (int) (dinosaur[3] - dinosaur[2]);
+        int oWidth = (int) (obstacle[1] - obstacle[0]);
+        int oHeight = (int) (obstacle[3] - obstacle[2]);
+        Rectangle d = new Rectangle((int) dinosaur[0], (int) dinosaur[2], dWidth, dHeight);
+        Rectangle o = new Rectangle((int) obstacle[0], (int) obstacle[2], oWidth, oHeight);
+
+        Rectangle intersect = Rectangle.Intersect(d, o);
+
+        for(int y = intersect.Top; y < intersect.Bottom; y ++) {
+            for(int x = intersect.Left; x < intersect.Right; x ++) {
+                System.Console.WriteLine(x + " " + y);
+                int pixelD = (x - d.X) + (y - d.Y) * dWidth;
+                int pixelO = (x - o.X) + (y - o.Y) * oWidth;
+
+                if(pixelD >= 0 && pixelD < colorDinosaur.Length && pixelO >= 0 && pixelO < colorObstacle.Length) {
+                    Color colorD = colorDinosaur[pixelD];
+                    Color colorO = colorObstacle[pixelO];
+
+                    if(colorD.A > 0 && colorO.A > 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

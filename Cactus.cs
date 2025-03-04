@@ -9,13 +9,14 @@ class Cactus {
 
     public class Entity {
         // entity of current displayed cactus
-        public float pos;           // X position
+        public Vector2 pos;           // X position
         public Texture2D cactus;    // instance of cactus
-        public float zoom;          // zoom rate
-
-        public Entity(float pos, Texture2D cactus, float zoom) {
+        public Color[] color;
+        public float zoom;
+        public Entity(Vector2 pos, Texture2D cactus, Color[] color, float zoom) {
             this.pos = pos;
             this.cactus = cactus;
+            this.color = color;
             this.zoom = zoom;
         }
     }
@@ -29,6 +30,7 @@ class Cactus {
     private float duration;             // 
     private bool isGenerated;           // 
     private float totalDuration;        // 
+    
     public Cactus(List<Texture2D> cactuses, float originalPosHeihgt, float speed) 
     {
         this.cactuses = cactuses;
@@ -59,9 +61,9 @@ class Cactus {
         }
 
         foreach(Entity cactus in displayed) {
-            cactus.pos -= (float)System.Math.Floor(timeUnit * speed);
+            cactus.pos.X -= (float)System.Math.Floor(timeUnit * speed);
         }
-        if(displayed.Count > 0 && displayed[0].pos <= - displayed[0].cactus.Width) {
+        if(displayed.Count > 0 && displayed[0].pos.X <= - displayed[0].cactus.Width) {
             displayed.RemoveAt(0);
         }
         return displayed;
@@ -91,7 +93,9 @@ class Cactus {
             }
             float zoom = getZoom();
             Texture2D next = cactuses[nextCactus];
-            Entity newCactus = new Entity(curPos, next, zoom);
+            Color[] color = new Color[next.Width * next.Height];
+            next.GetData(color);
+            Entity newCactus = new Entity(new Vector2(curPos, originalPosHeihgt), next, color, zoom);
             displayed.Add(newCactus);
             prePos = curPos + next.Width * zoom;
         }
@@ -106,7 +110,7 @@ class Cactus {
     {
         foreach(Entity entity in displayed) {
             Texture2D cactus = entity.cactus;
-            Vector2 destination = new Vector2(entity.pos, originalPosHeihgt);
+            Vector2 destination = entity.pos;
             float zoom = entity.zoom;
             spriteBatch.Draw(cactus, destination, null, Color.White, 0f, new Vector2(cactus.Width, cactus.Height), zoom, SpriteEffects.None, 0f);
         }
