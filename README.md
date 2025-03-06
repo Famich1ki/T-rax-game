@@ -20,7 +20,7 @@ Prototype finished. Basic functions, including movements, speed accelaration, sc
     - The score tracking now is somehow unsatisfied.
 - Revising variable names.  
     - Some variable names are confused which need to be renamed.
-- （If necessary）Reconstruction methods.
+- (If necessary)Reconstruction methods.
     - Some Parameters of methods are unnecessary or unstructured.
 
 ### 2025.03.04
@@ -35,6 +35,21 @@ Last version the collision detection method is simply AABB detection. Enhancing 
     - The score tracking now is somehow unsatisfied.
 - Revising variable names.  
     - Some variable names are confused which need to be renamed.
-- （If necessary）Reconstruction methods.
+- (If necessary)Reconstruction methods.
     - Some Parameters of methods are unnecessary or unstructured.
+- Game over frame.
 
+### 2025.03.06
+
+#### updating
+Fixed some collision detection issues on pixel-level detection. Now the pixel-level detection can be correctly performed.  
+Adding several debug methods.  
+Fixed some score recording issues. Now score can be correctly displayed.  
+Adjusting the ground height on the screen.
+Adding game over frame.  
+
+#### NEED TO DO
+- The UI designation of game start and game over.
+    - Design a simple UI for game start frame and game over frame.
+- Sometimes birds and cactuses are generated simultaneously， which makes it impossible to dodge.
+    - Restruct the obstacle generating process.

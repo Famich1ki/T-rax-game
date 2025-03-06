@@ -16,12 +16,14 @@ class Cactus {
     - GetNextCactuses(_graphics:GraphicsDeviceManager) : void
     - getZoom() : float
     + Draw(spriteBatch:SpriteBatch) : void
+    - getZoomedColor(original:Color[], originWidth:int, originHeight:int, newWidth:int, newHeight:int) : Color[]
 }
 class Entity {
-    + pos : float
+    + pos : Vector2
     + cactus : Texture2D
+    + color : Color[]
     + zoom : float
-    + Entity(pos:float, cactus:Texture2D, zoom:float)
+    + Entity(pos:Vector2, cactus:Texture2D, color:Color[], zoom:float)
 }
 Cactus +-- Entity
 @enduml

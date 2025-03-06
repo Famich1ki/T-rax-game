@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>d:/T-rax/Content/xx1.png</SourceFile>
+  <SourceFile>D:/T-rax/Content/xx1.png</SourceFile>
   <SourceTime>2016-06-14T05:13:24+09:00</SourceTime>
-  <DestFile>d:/T-rax/Content/bin/DesktopGL/Content/xx1.xnb</DestFile>
-  <DestTime>2025-02-25T15:18:05.3130672+09:00</DestTime>
+  <DestFile>D:/T-rax/Content/bin/DesktopGL/Content/xx1.xnb</DestFile>
+  <DestTime>2025-03-06T18:23:52.353438+09:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-17T02:05:56+09:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

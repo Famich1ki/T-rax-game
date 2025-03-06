@@ -18,11 +18,17 @@ class Dinosaur {
     - jumpingSpeed : float
     - Crouchs : Texture2D
     + IsCrouching : bool <<get>>
+    - runningColor : Color[][]
+    - crouchingColor : Color[][]
+    - jumpingColor : Color[]
     + Dinosaur(runnings:Texture2D, crouchs:Texture2D, rows:int, columns:int, widthPos:float, heightPos:int, _graphics:GraphicsDeviceManager)
     + Update(gameTime:GameTime) : float
     + Init(spriteBatch:SpriteBatch) : void
-    + Run(spriteBatch:SpriteBatch) : void
-    + Jump(spriteBatch:SpriteBatch) : void
-    + Crouch(spriteBatch:SpriteBatch) : void
+    + Run(spriteBatch:SpriteBatch) : Color[]
+    + Jump(spriteBatch:SpriteBatch) : Color[]
+    + Crouch(spriteBatch:SpriteBatch) : Color[]
+    + GameOver(spriteBatch:SpriteBatch) : void
+    - getColors() : void
+    - getZoomedColor(original:Color[], originWidth:int, originHeight:int, newWidth:int, newHeight:int) : Color[]
 }
 @enduml

@@ -10,10 +10,11 @@ class Bird {
     public class Entity {
         public Vector2 pos;
         public Color[] color;
-
-        public Entity(Vector2 pos, Color[] color) {
+        public Texture2D bird;
+        public Entity(Vector2 pos, Color[] color, Texture2D bird) {
             this.pos = pos;
             this.color = color;
+            this.bird = bird;
         }
     }
     private Texture2D bird1;        // instance of bird
@@ -39,10 +40,6 @@ class Bird {
     {
         this.bird1 = bird1;
         this.bird2 = bird2;
-        this.color1 = new Color[this.bird1.Width * this.bird1.Height];
-        this.bird1.GetData(this.color1);
-        this.color2 = new Color[this.bird2.Width * this.bird2.Height];
-        this.bird2.GetData(this.color2);
         this.maxHeight = maxHeight;
         this.minHeight = minHeight;
         this.speed = speed;
@@ -57,6 +54,13 @@ class Bird {
         spawnAfter = GetNextSpawnAfter();
         duration = 0f;
         this.totalDuration = 0f;
+
+        this.color1 = new Color[this.bird1.Width * this.bird1.Height];
+        this.bird1.GetData(this.color1);
+        this.color2 = new Color[this.bird2.Width * this.bird2.Height];
+        this.bird2.GetData(this.color2);
+        this.color1 = getZoomedColor(this.color1, bird1.Width, bird1.Height, (int) (bird1.Width * zoom), (int) (bird1.Height * zoom));
+        this.color2 = getZoomedColor(this.color2, bird2.Width, bird2.Height, (int) (bird2.Width * zoom), (int) (bird2.Height * zoom));
     }
 
     public List<Entity> Update(GameTime gameTime, GraphicsDeviceManager _graphics) 
@@ -82,7 +86,10 @@ class Bird {
             isGenerated = true;
             duration = 0f;
             Color[] color = currentFrame == 0 ? color1 : color2;
-            displayed.Add(new Entity(new Vector2(_graphics.PreferredBackBufferWidth, GetNextHeight()), color));
+            Texture2D bird = currentFrame == 0 ? bird1 : bird2;
+            // System.Console.WriteLine($"bird: width - {bird.Width} - height - {bird.Height}");
+            // System.Console.WriteLine($"color: {color.Length}");
+            displayed.Add(new Entity(new Vector2(_graphics.PreferredBackBufferWidth, GetNextHeight()), color, bird));
         }
         for(int i = 0; i < displayed.Count; i ++) {
             Vector2 cur = displayed[i].pos;
@@ -101,7 +108,8 @@ class Bird {
             Texture2D curBird = currentFrame == 0 ? bird1 : bird2;
             Vector2 destination = entity.pos;
             entity.color = currentFrame == 0 ? color1 : color2;
-            spriteBatch.Draw(curBird, destination, null, Color.White, 0f, new Vector2(curBird.Width, curBird.Height), zoom, SpriteEffects.None, 0f);
+            entity.bird = curBird;
+            spriteBatch.Draw(curBird, destination, null, Color.White, 0f, new Vector2(0, 0), zoom, SpriteEffects.None, 0f);
         }
     }
 
@@ -112,6 +120,28 @@ class Bird {
 
     private float GetNextHeight() 
     {
-        return minHeight + (float) random.NextSingle() * (maxHeight - minHeight);
+        return minHeight - bird1.Height * zoom + (float) random.NextSingle() * (maxHeight - minHeight);
+    }
+
+    private Color[] getZoomedColor(Color[] original, int originWidth, int originHeight, int newWidth, int newHeight) {
+        Color[] zoomedColor = new Color[newWidth * newHeight];
+
+        for (int y = 0; y < newHeight; y++)
+        {
+            for (int x = 0; x < newWidth; x++)
+            {
+                int origX = (int)(x / (float)newWidth * originWidth);
+                int origY = (int)(y / (float)newHeight * originHeight);
+
+                origX = Math.Clamp(origX, 0, originWidth - 1);
+                origY = Math.Clamp(origY, 0, originHeight - 1);
+
+                int origIndex = origY * originWidth + origX;
+                int newIndex = y * newWidth + x;
+                zoomedColor[newIndex] = original[origIndex];
+            }
+        }
+
+        return zoomedColor;
     }
 }

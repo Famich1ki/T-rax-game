@@ -93,9 +93,12 @@ class Cactus {
             }
             float zoom = getZoom();
             Texture2D next = cactuses[nextCactus];
-            Color[] color = new Color[next.Width * next.Height];
-            next.GetData(color);
-            Entity newCactus = new Entity(new Vector2(curPos, originalPosHeihgt), next, color, zoom);
+            Color[] origin = new Color[next.Width * next.Height];
+            next.GetData(origin);
+            int newWidth = (int) (next.Width * zoom);
+            int newHeight = (int) (next.Height * zoom);
+            Color[] zoomedColor = getZoomedColor(origin, next.Width, next.Height, newWidth, newHeight);
+            Entity newCactus = new Entity(new Vector2(curPos, originalPosHeihgt), next, zoomedColor, zoom);
             displayed.Add(newCactus);
             prePos = curPos + next.Width * zoom;
         }
@@ -112,7 +115,29 @@ class Cactus {
             Texture2D cactus = entity.cactus;
             Vector2 destination = entity.pos;
             float zoom = entity.zoom;
-            spriteBatch.Draw(cactus, destination, null, Color.White, 0f, new Vector2(cactus.Width, cactus.Height), zoom, SpriteEffects.None, 0f);
+            spriteBatch.Draw(cactus, destination, null, Color.White, 0f, new Vector2(0, cactus.Height), zoom, SpriteEffects.None, 0f);
         }
+    }
+
+    private Color[] getZoomedColor(Color[] original, int originWidth, int originHeight, int newWidth, int newHeight) {
+        Color[] zoomedColor = new Color[newWidth * newHeight];
+
+        for (int y = 0; y < newHeight; y++)
+        {
+            for (int x = 0; x < newWidth; x++)
+            {
+                int origX = (int)(x / (float)newWidth * originWidth);
+                int origY = (int)(y / (float)newHeight * originHeight);
+
+                origX = Math.Clamp(origX, 0, originWidth - 1);
+                origY = Math.Clamp(origY, 0, originHeight - 1);
+
+                int origIndex = origY * originWidth + origX;
+                int newIndex = y * newWidth + x;
+                zoomedColor[newIndex] = original[origIndex];
+            }
+        }
+
+        return zoomedColor;
     }
 }

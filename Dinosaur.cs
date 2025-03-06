@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+using System;
 /*
     This is dinosaur class including every attrubute and behavior of dinosaur.
     There are three core behaviors which are init (before game start), running (simply running), crouch (when press key 's' or 'down') and jump (when press key space or 'w' or 'up')
@@ -146,6 +146,14 @@ namespace dinosaur
             return crouchingColor[1];
         }
 
+        public void GameOver(SpriteBatch spriteBatch) {
+            int width = Runnings.Width / 5;
+            Rectangle sourceRectangle = new Rectangle(1 + width * 4, 0, Runnings.Width / 5, Runnings.Height);
+            Vector2 destination = new Vector2(widthPos, heightPos);
+
+            spriteBatch.Draw(Runnings, destination, sourceRectangle, Color.White, 0f, new Vector2(0, 0), zoom, SpriteEffects.None, 0f);
+        }
+
         private void getColors() {
             int runningLen = (this.Runnings.Width / 5) * this.Runnings.Height;
             int crouchingLen = (this.Crouchs.Width / 2) * this.Crouchs.Height;
@@ -169,6 +177,39 @@ namespace dinosaur
             this.Crouchs.GetData(0, crouching1, crouchingColor[0], 0, crouchingLen);
             this.Crouchs.GetData(0, crouching2, crouchingColor[1], 0, crouchingLen);
             this.Runnings.GetData(0, jumping, jumpingColor, 0, runningLen);
+            
+            int runningWidth = this.Runnings.Width / 5;
+            int runningHeight = this.Runnings.Height;
+            int crouchingWidth = this.Crouchs.Width / 2;
+            int crouchingHeight = this.Crouchs.Height;
+
+            runningColor[0] = getZoomedColor(runningColor[0], runningWidth, runningHeight, (int) (runningWidth * zoom), (int) (runningHeight * zoom));
+            runningColor[1] = getZoomedColor(runningColor[1], runningWidth, runningHeight, (int) (runningWidth * zoom), (int) (runningHeight * zoom));
+            crouchingColor[0] = getZoomedColor(crouchingColor[0], crouchingWidth, crouchingHeight, (int) (crouchingWidth * zoom), (int) (crouchingHeight * zoom));
+            crouchingColor[1] = getZoomedColor(crouchingColor[1], crouchingWidth, crouchingHeight, (int) (crouchingWidth * zoom), (int) (crouchingHeight * zoom));
+            jumpingColor = getZoomedColor(jumpingColor, runningWidth, runningHeight, (int) (runningWidth * zoom), (int) (runningHeight * zoom));
         }
+
+        private Color[] getZoomedColor(Color[] original, int originWidth, int originHeight, int newWidth, int newHeight) {
+        Color[] zoomedColor = new Color[newWidth * newHeight];
+
+        for (int y = 0; y < newHeight; y++)
+        {
+            for (int x = 0; x < newWidth; x++)
+            {
+                int origX = (int)(x / (float)newWidth * originWidth);
+                int origY = (int)(y / (float)newHeight * originHeight);
+
+                origX = Math.Clamp(origX, 0, originWidth - 1);
+                origY = Math.Clamp(origY, 0, originHeight - 1);
+
+                int origIndex = origY * originWidth + origX;
+                int newIndex = y * newWidth + x;
+                zoomedColor[newIndex] = original[origIndex];
+            }
+        }
+
+        return zoomedColor;
+    }
     }
 }

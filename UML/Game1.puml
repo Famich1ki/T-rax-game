@@ -12,14 +12,16 @@ class Game1 {
     - {static} dinosaurInitX : float
     - dinosaurPos : Vector2
     - cactuses : List<Cactus.Cactus.Entity>
-    - birds : List<Vector2>
+    - birds : List<Bird.Bird.Entity>
     - crouch : Vector2
     - run : Vector2
     - birdSize : Vector2
     - isGameOver : bool
     - font : SpriteFont
     - score : int
-    - duration : float
+    - dinosaurColor : Color[]
+    - originalSpeed : float
+    - scoreSum : float
     + Game1()
     # <<override>> Initialize() : void
     # <<override>> LoadContent() : void
@@ -32,9 +34,11 @@ class Game1 {
     - isOverlappingY(bottomA:float, topA:float, bottomB:float, topB:float) : bool
     - getDinosaurPos() : float[]
     - initGame() : void
-    - drawBirdRectangle(birds:List<Vector2>, spriteBatch:SpriteBatch, color:Color) : void
+    - drawBirdRectangle(birds:List<Bird.Bird.Entity>, spriteBatch:SpriteBatch, color:Color) : void
     - drawDinosaurRectangle(spriteBatch:SpriteBatch, color:Color) : void
     - drawCactusRectangle(cactuses:List<Cactus.Cactus.Entity>, spriteBatch:SpriteBatch, color:Color) : void
+    - isPixelCollision(dinosaur:float[], obstacle:float[], colorDinosaur:Color[], colorObstacle:Color[]) : bool
+    - debugDrawing() : void
 }
 Game <|-- Game1
 @enduml

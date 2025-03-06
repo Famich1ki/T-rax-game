@@ -2,6 +2,8 @@
 class Bird {
     - bird1 : Texture2D
     - bird2 : Texture2D
+    - color1 : Color[]
+    - color2 : Color[]
     - maxHeight : float
     - minHeight : float
     - speed : float
@@ -11,15 +13,23 @@ class Bird {
     - totalFrame : int
     - elapsedTime : float
     - zoom : float
-    - displayed : List<Vector2>
+    - displayed : List<Entity>
     - isGenerated : bool
     - spawnAfter : float
     - duration : float
     - totalDuration : float
     + Bird(bird1:Texture2D, bird2:Texture2D, maxHeight:float, minHeight:float, speed:float)
-    + Update(gameTime:GameTime, _graphics:GraphicsDeviceManager) : List<Vector2>
+    + Update(gameTime:GameTime, _graphics:GraphicsDeviceManager) : List<Entity>
     + Draw(spriteBatch:SpriteBatch) : void
     - GetNextSpawnAfter() : float
     - GetNextHeight() : float
+    - getZoomedColor(original:Color[], originWidth:int, originHeight:int, newWidth:int, newHeight:int) : Color[]
 }
+class Entity {
+    + pos : Vector2
+    + color : Color[]
+    + bird : Texture2D
+    + Entity(pos:Vector2, color:Color[], bird:Texture2D)
+}
+Bird +-- Entity
 @enduml

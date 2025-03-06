@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("T-rax")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5833f97769530a393c31ceb5ce51050dbd786587")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a4f63beb99688ce2f80bfa83bafb916df3de0ce4")]
 [assembly: System.Reflection.AssemblyProductAttribute("T-rax")]
 [assembly: System.Reflection.AssemblyTitleAttribute("T-rax")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
