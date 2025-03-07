@@ -4,18 +4,18 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/T-rax/Content/bird1.png</File>
-    <File>D:/T-rax/Content/bird2.png</File>
-    <File>D:/T-rax/Content/CrouchAtlases.png</File>
-    <File>D:/T-rax/Content/ground.png</File>
-    <File>D:/T-rax/Content/lc1.png</File>
-    <File>D:/T-rax/Content/lc3.png</File>
-    <File>D:/T-rax/Content/lc5.png</File>
-    <File>D:/T-rax/Content/RunningAtlases.png</File>
-    <File>D:/T-rax/Content/score.spritefont</File>
-    <File>D:/T-rax/Content/xx1.png</File>
-    <File>D:/T-rax/Content/xx3.png</File>
-    <File>D:/T-rax/Content/xx6.png</File>
+    <File>d:/T-rax/Content/bird1.png</File>
+    <File>d:/T-rax/Content/bird2.png</File>
+    <File>d:/T-rax/Content/CrouchAtlases.png</File>
+    <File>d:/T-rax/Content/ground.png</File>
+    <File>d:/T-rax/Content/lc1.png</File>
+    <File>d:/T-rax/Content/lc3.png</File>
+    <File>d:/T-rax/Content/lc5.png</File>
+    <File>d:/T-rax/Content/RunningAtlases.png</File>
+    <File>d:/T-rax/Content/score.spritefont</File>
+    <File>d:/T-rax/Content/xx1.png</File>
+    <File>d:/T-rax/Content/xx3.png</File>
+    <File>d:/T-rax/Content/xx6.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

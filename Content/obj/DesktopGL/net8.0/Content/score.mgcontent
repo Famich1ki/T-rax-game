@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/T-rax/Content/score.spritefont</SourceFile>
-  <SourceTime>2025-02-24T18:29:40.6544223+09:00</SourceTime>
-  <DestFile>D:/T-rax/Content/bin/DesktopGL/Content/score.xnb</DestFile>
-  <DestTime>2025-03-06T18:23:52.348231+09:00</DestTime>
+  <SourceFile>d:/T-rax/Content/score.spritefont</SourceFile>
+  <SourceTime>2025-03-07T18:35:28.084063+09:00</SourceTime>
+  <DestFile>d:/T-rax/Content/bin/DesktopGL/Content/score.xnb</DestFile>
+  <DestTime>2025-03-07T18:35:34.2230941+09:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2024-08-17T02:05:56+09:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

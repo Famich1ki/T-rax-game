@@ -32,7 +32,13 @@ public class Game1 : Game
     private int score;                          // score recorder 
     private Color[] dinosaurColor;              // Color matrix of dinosaur
     private float originalSpeed;                // initial game speed
-    private float scoreSum;
+    private float scoreSum;                     // for score increasing
+    private double duration;                    // duration till next event happens
+    private double timer;                       // time recorder
+    private Queue<double[]> events;             // event recorder (first element: -1 for frozen, 0 for generating cactus, 1 for generating bird; second element: duration)
+    private bool hasEvent;                      // determine whether has a event to keep, we could have next event if false
+    private double[] curEvent;                  // event now
+    private Random random;                      // instance of Random
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -43,13 +49,21 @@ public class Game1 : Game
         score = 0;
         originalSpeed = groundSpeed;
         scoreSum = 0f;
+
+        random = new Random();
+        duration = 0f;
+        timer = 0f;
+        events = new Queue<double[]>();
+        events.Enqueue(new double[] {0, 0.5 + random.NextDouble()});
+        hasEvent = false;
+        curEvent = null;
     }
 
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
         
-        // set resolution（例如 1920x1080）
+        // set resolution（exp. 1920x1080）
         _graphics.PreferredBackBufferWidth = 1280;
         _graphics.PreferredBackBufferHeight = 720;
         _graphics.ApplyChanges();
@@ -102,10 +116,11 @@ public class Game1 : Game
             initGame();
         }
         if(!isGameOver) {
-            ground.Update(gameTime);
+            generateObstacle(gameTime);
+            ground.Update(gameTime, groundSpeed);
             dinosaurPos.Y = dinosaur.Update(gameTime);
-            cactuses = cactus.Update(gameTime, _graphics);
-            birds = bird.Update(gameTime, _graphics);
+            cactuses = cactus.Update(gameTime, _graphics, groundSpeed);
+            birds = bird.Update(gameTime, _graphics, groundSpeed);
 
             scoreSum += (float) (groundSpeed / 100 * gameTime.ElapsedGameTime.TotalSeconds); 
             if(scoreSum >= 1) {
@@ -120,18 +135,6 @@ public class Game1 : Game
 
         groundSpeed = originalSpeed * (1 + (score / 100) * 0.5f);
         base.Update(gameTime);
-        // System.Console.WriteLine(birds == null);
-        // System.Console.WriteLine(cactuses == null);
-        // if(birds != null) {
-        //     System.Console.WriteLine(birds.Count);
-        // } else {
-        //     System.Console.WriteLine("Null");
-        // }
-        // if(cactuses != null) {
-        //     System.Console.WriteLine(cactuses.Count);
-        // } else {
-        //     System.Console.WriteLine("Null");
-        // }
         
     }
 
@@ -157,12 +160,14 @@ public class Game1 : Game
         } else {
             if(isColliding()) {
                 dinosaur.GameOver(_spriteBatch);
+                _spriteBatch.DrawString(font, "Game Over ! Press R to restart", new Vector2(_graphics.PreferredBackBufferWidth * 0.3f, _graphics.PreferredBackBufferHeight * 0.1f), Color.BlueViolet);
             } else {
+                _spriteBatch.DrawString(font, "Press R to start", new Vector2(_graphics.PreferredBackBufferWidth * 0.3f, _graphics.PreferredBackBufferHeight * 0.1f), Color.BlueViolet);
                 dinosaur.Init(_spriteBatch);
             }
         }
         debugDrawing();
-        _spriteBatch.DrawString(font, "SCORE :" + score, new Vector2(_graphics.PreferredBackBufferWidth * 0.80f, _graphics.PreferredBackBufferHeight * 0.1f), Color.Blue);
+        _spriteBatch.DrawString(font, "SCORE :" + score, new Vector2(_graphics.PreferredBackBufferWidth * 0.80f, _graphics.PreferredBackBufferHeight * 0.1f), Color.Black);
         // drawBirdRectangle(birds, _spriteBatch, Color.Red);
         // drawDinosaurRectangle(_spriteBatch, Color.Blue);
         // drawCactusRectangle(cactuses, _spriteBatch, Color.Yellow);
@@ -189,7 +194,6 @@ public class Game1 : Game
             obstacle[3] = cactusBaseHeight;                     // bottom
             obstacle[2] = obstacle[3] - cactus.Height * zoom;   // top
             if(isOverlappingX(dinoPos[0], dinoPos[1], obstacle[0], obstacle[1]) && isOverlappingY(dinoPos[3], dinoPos[2], obstacle[3], obstacle[2])) {
-                System.Console.WriteLine("colliding with cactus");
                 return isPixelCollision(dinoPos, obstacle, dinosaurColor, entity.color);
             }
         }
@@ -206,7 +210,6 @@ public class Game1 : Game
             obstacle[2] = birdPos.Y;                        // top
             obstacle[3] = birdPos.Y + birdSize.Y * 1.5f;    // bottom
             if(isOverlappingX(dinoPos[0], dinoPos[1], obstacle[0], obstacle[1]) && isOverlappingY(dinoPos[3], dinoPos[2], obstacle[3], obstacle[2])) {
-                System.Console.WriteLine("colliding with bird");
                 return isPixelCollision(dinoPos, obstacle, dinosaurColor, entity.color);
             }
         }
@@ -259,6 +262,32 @@ public class Game1 : Game
         groundSpeed = originalSpeed;
 
         birds = new List<Bird.Bird.Entity>();
+    }
+
+    private void generateObstacle(GameTime gameTime) {
+        if(hasEvent) {
+            timer += gameTime.ElapsedGameTime.TotalSeconds;
+            if(timer >= duration) {
+                if(curEvent[0] == 0) {
+                    cactus.GetNextCactuses(_graphics);
+                    events.Enqueue(new double[] {-1, 0.5});
+                    events.Enqueue(new double[] {random.NextDouble() < 0.3 ? 1 : 0, 0.5 + random.NextDouble()});
+                }
+                if(curEvent[0] == 1) {
+                    bird.getNextBird(_graphics);
+                    events.Enqueue(new double[] {-1, 0.5});
+                    events.Enqueue(new double[] {random.NextDouble() < 0.3 ? 1 : 0, 0.5 + random.NextDouble()});
+                }
+                hasEvent = false;
+                curEvent = null;
+                timer = 0;
+                duration = 0;
+            }
+        } else {
+            hasEvent = true;
+            curEvent = events.Dequeue();
+            duration = curEvent[1];
+        }
     }
 
     private void drawBirdRectangle(List<Bird.Bird.Entity> birds, SpriteBatch spriteBatch, Color color) 
@@ -322,12 +351,10 @@ public class Game1 : Game
 
         for(int y = intersect.Top; y < intersect.Bottom; y ++) {
             for(int x = intersect.Left; x < intersect.Right; x ++) {
-                // System.Console.WriteLine(x + " " + y);
                 int pixelD = (x - d.X) + (y - d.Y) * dWidth;
                 int pixelO = (x - o.X) + (y - o.Y) * oWidth;
 
                 if(pixelD >= 0 && pixelD < colorDinosaur.Length && pixelO >= 0 && pixelO < colorObstacle.Length) {
-                    // System.Console.WriteLine("in");
                     Color colorD = colorDinosaur[pixelD];
                     Color colorO = colorObstacle[pixelO];
 
@@ -350,17 +377,15 @@ public class Game1 : Game
             int height = (int) (entity.cactus.Height * entity.zoom);
             Texture2D textureFromColor = new Texture2D(GraphicsDevice, width, height);
             textureFromColor.SetData(entity.color);
-            _spriteBatch.Draw(textureFromColor, entity.pos, null, Color.Yellow, 0f, new Vector2(0, height), 1, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(textureFromColor, entity.pos, null, Color.BurlyWood, 0f, new Vector2(0, height), 1, SpriteEffects.None, 0f);
         }
 
         foreach(Bird.Bird.Entity entity in birds) {
             int width = (int) (entity.bird.Width * 1.5f);
             int height = (int) (entity.bird.Height * 1.5f);
             Texture2D textureFromColor = new Texture2D(GraphicsDevice, width, height);
-            // System.Console.WriteLine($"entity.bird: width - {width} - height - {height}");
-            // System.Console.WriteLine($"entity.color: {entity.color.Length}");
             textureFromColor.SetData(entity.color);
-            _spriteBatch.Draw(textureFromColor, entity.pos, null, Color.Red, 0f, new Vector2(0, 0), 1, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(textureFromColor, entity.pos, null, Color.AntiqueWhite, 0f, new Vector2(0, 0), 1, SpriteEffects.None, 0f);
         }
         
     }

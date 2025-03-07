@@ -10,7 +10,7 @@ class Cactus {
     public class Entity {
         // entity of current displayed cactus
         public Vector2 pos;           // X position
-        public Texture2D cactus;    // instance of cactus
+        public Texture2D cactus;      // instance of cactus
         public Color[] color;
         public float zoom;
         public Entity(Vector2 pos, Texture2D cactus, Color[] color, float zoom) {
@@ -26,10 +26,6 @@ class Cactus {
     private float speed;                // speed of cactus (as same as groundSpeed)
     private List<Entity> displayed;     // cactuses currently displayed on the screen
     private Random random;              // instance of Random
-    private float spawnAfter;           // 
-    private float duration;             // 
-    private bool isGenerated;           // 
-    private float totalDuration;        // 
     
     public Cactus(List<Texture2D> cactuses, float originalPosHeihgt, float speed) 
     {
@@ -39,27 +35,13 @@ class Cactus {
         this.speed = speed;
         displayed = new List<Entity>();
         random = new Random();
-        spawnAfter = GetNextSpawnAfter();
-        duration = 0;
-        isGenerated = false;
-        totalDuration = 0f;
     }
 
-    public List<Entity> Update(GameTime gameTime, GraphicsDeviceManager _graphics) 
+    public List<Entity> Update(GameTime gameTime, GraphicsDeviceManager _graphics, float groundSpeed) 
     {
+        this.speed = groundSpeed;
         float timeUnit = (float) gameTime.ElapsedGameTime.TotalSeconds;
-        totalDuration += timeUnit;
-        if(isGenerated) {
-            spawnAfter = GetNextSpawnAfter();
-            isGenerated = false;
-        }
-        duration += timeUnit;
-        if(duration >= spawnAfter && (totalDuration % 3) >= 1) {
-            isGenerated = true;
-            duration = 0;
-            GetNextCactuses(_graphics);
-        }
-
+        
         foreach(Entity cactus in displayed) {
             cactus.pos.X -= (float)System.Math.Floor(timeUnit * speed);
         }
@@ -74,7 +56,7 @@ class Cactus {
         return (float) random.NextSingle() * 2 + 1; // 1 <= NextSpawn < 3
     }
 
-    private void GetNextCactuses(GraphicsDeviceManager _graphics) 
+    public void GetNextCactuses(GraphicsDeviceManager _graphics) 
     {
         int num = random.Next(1, 4); // {1, 2, 3}
         List<int> selected = new List<int>();

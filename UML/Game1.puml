@@ -22,6 +22,12 @@ class Game1 {
     - dinosaurColor : Color[]
     - originalSpeed : float
     - scoreSum : float
+    - duration : double
+    - timer : double
+    - events : Queue<double[]>
+    - hasEvent : bool
+    - curEvent : double[]
+    - random : Random
     + Game1()
     # <<override>> Initialize() : void
     # <<override>> LoadContent() : void
@@ -34,6 +40,7 @@ class Game1 {
     - isOverlappingY(bottomA:float, topA:float, bottomB:float, topB:float) : bool
     - getDinosaurPos() : float[]
     - initGame() : void
+    - generateObstacle(gameTime:GameTime) : void
     - drawBirdRectangle(birds:List<Bird.Bird.Entity>, spriteBatch:SpriteBatch, color:Color) : void
     - drawDinosaurRectangle(spriteBatch:SpriteBatch, color:Color) : void
     - drawCactusRectangle(cactuses:List<Cactus.Cactus.Entity>, spriteBatch:SpriteBatch, color:Color) : void

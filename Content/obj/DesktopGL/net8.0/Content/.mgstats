@@ -1,13 +1,13 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"D:/T-rax/Content/bird1.png","D:/T-rax/Content/bin/DesktopGL/Content/bird1.xnb","TextureProcessor","Texture2DContent",329,7765,0.2007212
-"D:/T-rax/Content/bird2.png","D:/T-rax/Content/bin/DesktopGL/Content/bird2.xnb","TextureProcessor","Texture2DContent",348,7573,0.004027
-"D:/T-rax/Content/CrouchAtlases.png","D:/T-rax/Content/bin/DesktopGL/Content/CrouchAtlases.xnb","TextureProcessor","Texture2DContent",538,23605,0.0119284
-"D:/T-rax/Content/ground.png","D:/T-rax/Content/bin/DesktopGL/Content/ground.xnb","TextureProcessor","Texture2DContent",427,53017,0.0146397
-"D:/T-rax/Content/lc1.png","D:/T-rax/Content/bin/DesktopGL/Content/lc1.xnb","TextureProcessor","Texture2DContent",371,5389,0.0090077
-"D:/T-rax/Content/lc3.png","D:/T-rax/Content/bin/DesktopGL/Content/lc3.xnb","TextureProcessor","Texture2DContent",389,5389,0.0088524
-"D:/T-rax/Content/lc5.png","D:/T-rax/Content/bin/DesktopGL/Content/lc5.xnb","TextureProcessor","Texture2DContent",562,10897,0.0089516
-"D:/T-rax/Content/RunningAtlases.png","D:/T-rax/Content/bin/DesktopGL/Content/RunningAtlases.xnb","TextureProcessor","Texture2DContent",1345,44685,0.0096273
-"D:/T-rax/Content/score.spritefont","D:/T-rax/Content/bin/DesktopGL/Content/score.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37922,0.1058699
-"D:/T-rax/Content/xx1.png","D:/T-rax/Content/bin/DesktopGL/Content/xx1.xnb","TextureProcessor","Texture2DContent",325,3193,0.0070205
-"D:/T-rax/Content/xx3.png","D:/T-rax/Content/bin/DesktopGL/Content/xx3.xnb","TextureProcessor","Texture2DContent",314,2677,0.0064085
-"D:/T-rax/Content/xx6.png","D:/T-rax/Content/bin/DesktopGL/Content/xx6.xnb","TextureProcessor","Texture2DContent",320,2897,0.0067948
+"d:/T-rax/Content/bird1.png","d:/T-rax/Content/bin/DesktopGL/Content/bird1.xnb","TextureProcessor","Texture2DContent",329,7765,0.256373
+"d:/T-rax/Content/bird2.png","d:/T-rax/Content/bin/DesktopGL/Content/bird2.xnb","TextureProcessor","Texture2DContent",348,7573,0.0106213
+"d:/T-rax/Content/CrouchAtlases.png","d:/T-rax/Content/bin/DesktopGL/Content/CrouchAtlases.xnb","TextureProcessor","Texture2DContent",538,23605,0.0091174
+"d:/T-rax/Content/ground.png","d:/T-rax/Content/bin/DesktopGL/Content/ground.xnb","TextureProcessor","Texture2DContent",427,53017,0.0152888
+"d:/T-rax/Content/lc1.png","d:/T-rax/Content/bin/DesktopGL/Content/lc1.xnb","TextureProcessor","Texture2DContent",371,5389,0.0091861
+"d:/T-rax/Content/lc3.png","d:/T-rax/Content/bin/DesktopGL/Content/lc3.xnb","TextureProcessor","Texture2DContent",389,5389,0.0079961
+"d:/T-rax/Content/lc5.png","d:/T-rax/Content/bin/DesktopGL/Content/lc5.xnb","TextureProcessor","Texture2DContent",562,10897,0.0075771
+"d:/T-rax/Content/RunningAtlases.png","d:/T-rax/Content/bin/DesktopGL/Content/RunningAtlases.xnb","TextureProcessor","Texture2DContent",1345,44685,0.0125941
+"d:/T-rax/Content/score.spritefont","d:/T-rax/Content/bin/DesktopGL/Content/score.xnb","FontDescriptionProcessor","SpriteFontContent",2065,70690,0.2058927
+"d:/T-rax/Content/xx1.png","d:/T-rax/Content/bin/DesktopGL/Content/xx1.xnb","TextureProcessor","Texture2DContent",325,3193,0.006674
+"d:/T-rax/Content/xx3.png","d:/T-rax/Content/bin/DesktopGL/Content/xx3.xnb","TextureProcessor","Texture2DContent",314,2677,0.0077771
+"d:/T-rax/Content/xx6.png","d:/T-rax/Content/bin/DesktopGL/Content/xx6.xnb","TextureProcessor","Texture2DContent",320,2897,0.0081287

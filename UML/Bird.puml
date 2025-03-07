@@ -14,16 +14,13 @@ class Bird {
     - elapsedTime : float
     - zoom : float
     - displayed : List<Entity>
-    - isGenerated : bool
-    - spawnAfter : float
-    - duration : float
-    - totalDuration : float
     + Bird(bird1:Texture2D, bird2:Texture2D, maxHeight:float, minHeight:float, speed:float)
-    + Update(gameTime:GameTime, _graphics:GraphicsDeviceManager) : List<Entity>
+    + Update(gameTime:GameTime, _graphics:GraphicsDeviceManager, groundSpeed:float) : List<Entity>
     + Draw(spriteBatch:SpriteBatch) : void
     - GetNextSpawnAfter() : float
     - GetNextHeight() : float
     - getZoomedColor(original:Color[], originWidth:int, originHeight:int, newWidth:int, newHeight:int) : Color[]
+    + getNextBird(_graphics:GraphicsDeviceManager) : void
 }
 class Entity {
     + pos : Vector2

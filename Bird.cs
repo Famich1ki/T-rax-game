@@ -19,8 +19,8 @@ class Bird {
     }
     private Texture2D bird1;        // instance of bird
     private Texture2D bird2;        // another instance of bird
-    private Color[] color1;
-    private Color[] color2;
+    private Color[] color1;         // color matrix of bird1
+    private Color[] color2;         // color matrix of bird2
     private float maxHeight;        // upper limitation of bird
     private float minHeight;        // lower limitation of bird
     private float speed;            // speed of bird. (as same as groundSpeed)
@@ -30,11 +30,7 @@ class Bird {
     private int totalFrame;         // number of frame in a loop
     private float elapsedTime;      // timer
     private float zoom;             // zoom rate
-    private List<Entity> displayed;// birds currently displayed on the screen   
-    private bool isGenerated;       // 
-    private float spawnAfter;       // 
-    private float duration;         //
-    private float totalDuration;    // 
+    private List<Entity> displayed; // birds currently displayed on the screen   
 
     public Bird(Texture2D bird1, Texture2D bird2, float maxHeight, float minHeight, float speed) 
     {
@@ -50,10 +46,7 @@ class Bird {
         elapsedTime = 0f;
         zoom = 1.5f;
         displayed = new List<Entity>();
-        isGenerated = false;
-        spawnAfter = GetNextSpawnAfter();
-        duration = 0f;
-        this.totalDuration = 0f;
+        
 
         this.color1 = new Color[this.bird1.Width * this.bird1.Height];
         this.bird1.GetData(this.color1);
@@ -63,16 +56,12 @@ class Bird {
         this.color2 = getZoomedColor(this.color2, bird2.Width, bird2.Height, (int) (bird2.Width * zoom), (int) (bird2.Height * zoom));
     }
 
-    public List<Entity> Update(GameTime gameTime, GraphicsDeviceManager _graphics) 
+    public List<Entity> Update(GameTime gameTime, GraphicsDeviceManager _graphics, float groundSpeed) 
     {
+        this.speed = groundSpeed;
         float timeUnit = (float) gameTime.ElapsedGameTime.TotalSeconds;
-        totalDuration += timeUnit;
-        if(isGenerated) {
-            spawnAfter = GetNextSpawnAfter();
-            isGenerated = false;
-        }
+
         elapsedTime += timeUnit;
-        duration += timeUnit;
         if(elapsedTime >= frameTime) {
             elapsedTime = 0;
             currentFrame ++;
@@ -82,15 +71,6 @@ class Bird {
             currentFrame = 0;
         }
 
-        if(duration >= spawnAfter && (totalDuration % 3) < 1) {
-            isGenerated = true;
-            duration = 0f;
-            Color[] color = currentFrame == 0 ? color1 : color2;
-            Texture2D bird = currentFrame == 0 ? bird1 : bird2;
-            // System.Console.WriteLine($"bird: width - {bird.Width} - height - {bird.Height}");
-            // System.Console.WriteLine($"color: {color.Length}");
-            displayed.Add(new Entity(new Vector2(_graphics.PreferredBackBufferWidth, GetNextHeight()), color, bird));
-        }
         for(int i = 0; i < displayed.Count; i ++) {
             Vector2 cur = displayed[i].pos;
             cur.X -= (float)System.Math.Floor(speed * timeUnit);
@@ -143,5 +123,13 @@ class Bird {
         }
 
         return zoomedColor;
+    }
+
+    public void getNextBird(GraphicsDeviceManager _graphics) {
+        Color[] color = currentFrame == 0 ? color1 : color2;
+        Texture2D bird = currentFrame == 0 ? bird1 : bird2;
+        // System.Console.WriteLine($"bird: width - {bird.Width} - height - {bird.Height}");
+        // System.Console.WriteLine($"color: {color.Length}");
+        displayed.Add(new Entity(new Vector2(_graphics.PreferredBackBufferWidth, GetNextHeight()), color, bird));
     }
 }

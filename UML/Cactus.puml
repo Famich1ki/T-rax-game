@@ -6,14 +6,10 @@ class Cactus {
     - speed : float
     - displayed : List<Entity>
     - random : Random
-    - spawnAfter : float
-    - duration : float
-    - isGenerated : bool
-    - totalDuration : float
     + Cactus(cactuses:List<Texture2D>, originalPosHeihgt:float, speed:float)
-    + Update(gameTime:GameTime, _graphics:GraphicsDeviceManager) : List<Entity>
+    + Update(gameTime:GameTime, _graphics:GraphicsDeviceManager, groundSpeed:float) : List<Entity>
     - GetNextSpawnAfter() : float
-    - GetNextCactuses(_graphics:GraphicsDeviceManager) : void
+    + GetNextCactuses(_graphics:GraphicsDeviceManager) : void
     - getZoom() : float
     + Draw(spriteBatch:SpriteBatch) : void
     - getZoomedColor(original:Color[], originWidth:int, originHeight:int, newWidth:int, newHeight:int) : Color[]

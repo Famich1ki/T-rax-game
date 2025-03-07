@@ -37,7 +37,7 @@ namespace ground
             
         }
  
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, float groundSpeed)
         {
             float updatedSpeed = groundSpeed * (float) gameTime.ElapsedGameTime.TotalSeconds; 
             // This adjustment is to eliminate loss of precision effect. If we dont do this, you will find a slight flashing gap when two texture repositioning.
