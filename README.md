@@ -53,3 +53,9 @@ Adding game over frame.
     - Design a simple UI for game start frame and game over frame.
 - Sometimes birds and cactuses are generated simultaneously， which makes it impossible to dodge.
     - Restruct the obstacle generating process.
+
+### 2025.03.07
+
+#### updating 
+Adjusting obstacle generating problems.   
+Game Start and Game Over UI design. 
